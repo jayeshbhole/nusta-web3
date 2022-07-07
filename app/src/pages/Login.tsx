@@ -19,7 +19,7 @@ import { AiOutlineFire } from "react-icons/ai";
 import { useMoralis } from "react-moralis";
 import { useNavigate } from "react-router-dom";
 import LoginNavbar from "../components/LoginNavbar";
-import { connectors } from "./utils/connectorConfig";
+import { connectors } from "../components/utils/connectorConfig";
 
 const Login = () => {
     const { isOpen: isWalletSelectorOpen, onToggle: toggleWalletSelector } =
@@ -27,15 +27,14 @@ const Login = () => {
     useEffect(() => {
         document.title = "OnlyUwU - Login";
     }, []);
-    const { user, account, isAuthenticating, isAuthenticated } = useMoralis();
+    const { isAuthenticating } = useMoralis();
 
     return (
         <Flex
             overflow="hidden"
             flexDirection="column"
             height="100vh"
-            width="100vw"
-        >
+            width="100vw">
             <WalletSelectorModal
                 isWalletSelectorOpen={isWalletSelectorOpen}
                 toggleWalletSelector={toggleWalletSelector}
@@ -46,8 +45,7 @@ const Login = () => {
                 alignItems="center"
                 width="100vw"
                 height="73vh"
-                overflow="hidden"
-            >
+                overflow="hidden">
                 <Flex flexDirection="column" gap="1.4rem">
                     <Flex flexDirection="column" alignItems="center">
                         <Heading as="h4" size="xl">
@@ -65,8 +63,7 @@ const Login = () => {
                             variant="solid"
                             borderRadius={24}
                             size="lg"
-                            onClick={toggleWalletSelector}
-                        >
+                            onClick={toggleWalletSelector}>
                             Get started
                         </Button>
                     </Tooltip>
@@ -126,15 +123,13 @@ const WalletSelectorModal = ({
             onClose={toggleWalletSelector}
             size="md"
             isCentered
-            blockScrollOnMount
-        >
+            blockScrollOnMount>
             <ModalOverlay />
             <ModalContent
                 background={useColorModeValue("white", "bg.dark.900")}
                 borderWidth="1px"
                 borderColor={useColorModeValue("gray.200", "blue.700")}
-                borderRadius="xl"
-            >
+                borderRadius="xl">
                 <ModalHeader textAlign={"center"} fontSize="2xl">
                     Connect Wallet
                 </ModalHeader>
@@ -155,8 +150,7 @@ const WalletSelectorModal = ({
                                     />
                                 }
                                 key={key}
-                                onClick={() => login(connectorId)}
-                            >
+                                onClick={() => login(connectorId)}>
                                 <Text as="span" fontWeight={400} fontSize="md">
                                     {title}
                                 </Text>
