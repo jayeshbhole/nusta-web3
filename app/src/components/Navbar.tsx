@@ -33,15 +33,14 @@ import {
     PopoverContent,
     PopoverHeader,
     PopoverBody,
-    PopoverFooter,
     PopoverArrow,
     PopoverCloseButton,
-    PopoverAnchor,
 } from "@chakra-ui/react";
-import { getAuth, signOut } from "firebase/auth";
-import { app } from "../firebase";
+import { useMoralis } from "react-moralis";
+import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 
 const Navbar = () => {
+    const { logout, user } = useMoralis();
     const { colorMode, toggleColorMode } = useColorMode();
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
@@ -49,22 +48,9 @@ const Navbar = () => {
     const starOnGithub = () => {
         window.location.href = "https://github.com/VarunLanjhara/OnlyUwU";
     };
-    const toast = useToast();
-    const auth = getAuth(app);
-    const logout = () => {
-        signOut(auth)
-            .then(() => {
-                navigate("/login");
-            })
-            .catch((err) => {
-                toast({
-                    title: "Error",
-                    description: err?.message,
-                    status: "error",
-                    duration: 6900,
-                    isClosable: true,
-                });
-            });
+
+    const handleLogout = () => {
+        logout();
     };
     return (
         <Flex
@@ -74,67 +60,55 @@ const Navbar = () => {
             position="sticky"
             top={0}
             zIndex="100"
-            backgroundColor={colorMode === "light" ? "#ffffff" : "#1a202c"}
-        >
+            backgroundColor={colorMode === "light" ? "#ffffff" : "#1a202c"}>
             <Flex>
                 <Heading
                     color={colorMode === "light" ? "black" : "white"}
                     size={isMobile ? "sm" : "xl"}
-                    fontFamily="Sansita Swashed"
-                >
-                    OnlyUwU
+                    fontFamily="Sansita Swashed">
+                    Nusta Web3
                 </Heading>
             </Flex>
             <form
-                onSubmit={(e: React.FormEvent) => {
+                onSubmit={(e: any) => {
                     e.preventDefault();
                     setSearch("");
                     navigate("/search/" + search);
-                }}
-            >
-                <Tooltip label="Search shit" openDelay={400}>
-                    <InputGroup
-                        mx={isMobile ? 2 : 8}
-                        width={isMobile ? "40vw" : "50vw"}
-                    >
-                        <InputLeftElement
-                            pointerEvents="none"
-                            children={<ImSearch color="gray.300" />}
-                        />
-                        <Input
-                            type="text"
-                            placeholder="Search shit ..."
-                            variant="filled"
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                                setSearch(e.target.value);
-                            }}
-                            value={search}
-                        />
-                    </InputGroup>
-                </Tooltip>
+                }}>
+                <InputGroup
+                    mx={isMobile ? 2 : 8}
+                    width={isMobile ? "40vw" : "50vw"}>
+                    <InputLeftElement
+                        pointerEvents="none"
+                        children={<ImSearch color="gray.300" />}
+                    />
+                    <Input
+                        type="text"
+                        placeholder="Search shit ..."
+                        variant="filled"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setSearch(e.target.value);
+                        }}
+                        value={search}
+                    />
+                </InputGroup>
             </form>
             {colorMode === "light" ? (
-                <Tooltip label="Dark mode" openDelay={400}>
-                    <IconButton
-                        icon={<FaMoon />}
-                        aria-label="Dark mode"
-                        onClick={() => {
-                            toggleColorMode();
-                        }}
-                    />
-                </Tooltip>
+                <IconButton
+                    icon={<FaMoon />}
+                    aria-label="Dark mode"
+                    onClick={() => {
+                        toggleColorMode();
+                    }}
+                />
             ) : (
-                <Tooltip label="Light mode" openDelay={400}>
-                    <IconButton
-                        icon={<FaSun />}
-                        aria-label="Light mode"
-                        onClick={() => {
-                            toggleColorMode();
-                        }}
-                    />
-                </Tooltip>
+                <IconButton
+                    icon={<FaSun />}
+                    aria-label="Light mode"
+                    onClick={() => {
+                        toggleColorMode();
+                    }}
+                />
             )}
             <Popover>
                 <PopoverTrigger>
@@ -161,34 +135,32 @@ const Navbar = () => {
                     display={isMobile ? "none" : "flex"}
                     onClick={() => {
                         navigate("/create");
-                    }}
-                >
+                    }}>
                     Create
                 </Button>
             </Tooltip>
             <Menu>
-                <MenuButton>
-                    <Tooltip
-                        label={auth?.currentUser?.displayName}
-                        openDelay={400}
-                    >
-                        <Avatar
-                            cursor="pointer"
-                            src={
-                                auth?.currentUser?.photoURL as
-                                    | string
-                                    | undefined
-                            }
+                <MenuButton
+                    as={IconButton}
+                    icon={
+                        <Jazzicon
+                            seed={jsNumberForAddress(
+                                user?.get("ethAddress") || "0x"
+                            )}
                         />
+                    }>
+                    <Tooltip
+                        label={user?.attributes.displayName}
+                        openDelay={400}>
+                        <></>
                     </Tooltip>
                 </MenuButton>
                 <MenuList>
                     <MenuItem
                         gap="0.7rem"
                         onClick={() => {
-                            navigate(`/profile/${auth?.currentUser?.uid}`);
-                        }}
-                    >
+                            navigate(`/profile/${user?.attributes.uid}`);
+                        }}>
                         <FaUserCircle size="1.4rem" />
                         Your profile
                     </MenuItem>

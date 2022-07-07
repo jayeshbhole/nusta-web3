@@ -4,9 +4,9 @@ import Loader from "../components/Loader";
 import { useMoralis } from "react-moralis";
 
 const PrivateRoute = ({ children }: any) => {
-    const { user, isAuthenticating } = useMoralis();
+    const { user, isAuthenticated } = useMoralis();
 
-    return isAuthenticating ? (
+    return !isAuthenticated ? (
         <Loader />
     ) : user ? (
         children
