@@ -23,8 +23,7 @@ const Application = () => {
             <MoralisProvider
                 appId={APP_ID}
                 serverUrl={SERVER_URL}
-                initializeOnMount={true}
-            >
+                initializeOnMount={true}>
                 <App />
             </MoralisProvider>
         );
@@ -37,8 +36,10 @@ const Application = () => {
 
 ReactDOM.render(
     <React.StrictMode>
-        <ColorModeScript />
-        <Application />
+        <ChakraProvider>
+            <ColorModeScript />
+            <Application />
+        </ChakraProvider>
     </React.StrictMode>,
 
     document.getElementById("root")
