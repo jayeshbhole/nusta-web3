@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 const Loader = () => {
     useEffect(() => {
-        document.title = "OnlyUwU - Loading";
+        document.title = "Nusta Web3 - Loading";
     }, []);
     return (
         <Flex
@@ -11,13 +11,12 @@ const Loader = () => {
             alignItems="center"
             height="100vh"
             width="100vw"
-            background="white"
-        >
+            background="white">
             <Image
                 src="/loader.gif"
                 height="50%"
                 width="50%"
-                objectFit="cover"
+                objectFit="none"
             />
         </Flex>
     );
