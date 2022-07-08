@@ -105,12 +105,12 @@ const routes = [
     //     private: true,
     //     auth: false,
     // },
-    // {
-    //     path: "/create",
-    //     element: lazy(() => import("./pages/Create")),
-    //     private: true,
-    //     auth: false,
-    // },
+    {
+        path: "/create",
+        element: lazy(() => import("./pages/Create")),
+        private: true,
+        auth: false,
+    },
 ];
 
 export default App;
