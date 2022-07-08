@@ -6,7 +6,7 @@ const NotFound = () => {
     useEffect(() => {
         navigate("/");
     });
-    return <div></div>;
+    return <div>not found hehe</div>;
 };
 
 export default NotFound;

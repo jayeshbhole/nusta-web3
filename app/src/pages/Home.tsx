@@ -1,53 +1,33 @@
-import { Grid, useToast } from "@chakra-ui/react";
+import { Box, Grid, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import RightSidebar from "../components/RightSidebar";
-import Feed from "../components/Feed";
 import LeftSidebar from "../components/LeftSidebar";
-import {
-    collection,
-    onSnapshot,
-    getFirestore,
-    query,
-    orderBy,
-} from "firebase/firestore";
-import { app } from "../firebase";
+import RightSidebar from "../components/RightSidebar";
 import Loader from "../components/Loader";
+import { useMoralisQuery } from "react-moralis";
+import Feed from "../components/Feed";
 
 const Home = () => {
-    const toast = useToast();
-    const db = getFirestore(app);
     useEffect(() => {
         document.title = "OnlyUwU";
     }, []);
-    const [posts, setPosts] = useState([]);
-    const postsRef = collection(db, "posts");
-    const q = query(postsRef, orderBy("createdAt", "desc"));
-    const getPosts = async () => {
-        onSnapshot(q, (snapshot) => {
-            const posts = snapshot?.docs?.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            //@ts-ignore
-            setPosts(posts);
-        });
-    };
-    useEffect(() => {
-        getPosts();
-    }, []);
-    if (posts?.length === 0) {
-        return <Loader />;
-    }
+    const {
+        data: posts,
+        error,
+        isLoading,
+    } = useMoralisQuery("Post", (query) =>
+        query.descending("createdAt").limit(20)
+    );
+    console.log(posts, error);
+
     return (
-        <div>
+        <Box>
             <Navbar />
             <Grid
-                gridTemplateColumns="22vw auto 24vw"
+                gridTemplateColumns="22vw auto"
                 columnGap="2rem"
                 marginLeft="1rem"
-                marginRight="1rem"
-            >
+                marginRight="1rem">
                 <RightSidebar />
                 <Feed
                     isExplore={false}
@@ -58,9 +38,9 @@ const Home = () => {
                     isFollower={false}
                     homePosts={posts}
                 />
-                <LeftSidebar />
+                {/* <LeftSidebar /> */}
             </Grid>
-        </div>
+        </Box>
     );
 };
 
