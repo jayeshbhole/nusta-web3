@@ -24,26 +24,6 @@ const RightSidebar = () => {
             height="max-content"
             flexDirection="column">
             <Flex
-                className="profilestuff"
-                cursor="pointer"
-                alignItems="center"
-                width="100%"
-                padding="1rem"
-                borderRadius="1rem"
-                gap="0.2rem"
-                boxShadow="0 3px 10px rgb(0 0 0 / 0.2)">
-                <Flex borderRadius="50%">
-                    <Image src="/catboi.jpeg" alt="" width="90%" height="90%" />
-                </Flex>
-                <Flex flexDirection="column" alignItems="start">
-                    <Heading as="h5" size="lg">
-                        Painman
-                    </Heading>
-                    <Text>@painman</Text>
-                </Flex>
-            </Flex>
-
-            <Flex
                 borderRadius="1rem"
                 boxShadow="0 3px 10px rgb(0 0 0 / 0.2)"
                 marginTop="2rem"

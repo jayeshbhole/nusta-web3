@@ -78,6 +78,7 @@ const Feed = (props: Props) => {
         </Flex>
     ) : (
         <Flex
+            maxW="80ch"
             flexDirection="column"
             gap="1rem"
             width="100%"
@@ -90,13 +91,6 @@ const Feed = (props: Props) => {
                 <Tag>Movies</Tag>
                 <Tag>Music</Tag>
                 <Tag>Anime</Tag>
-                <Tag>YourMom</Tag>
-                <Tag>Idk</Tag>
-                <Tag>What</Tag>
-                <Tag>Else</Tag>
-                <Tag>To</Tag>
-                <Tag>Write</Tag>
-                <Tag>Lol</Tag>
             </Flex>
             {props?.homePosts?.map((post, index) => (
                 <Post key={index} post={post} />

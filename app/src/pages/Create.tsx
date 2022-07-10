@@ -13,13 +13,12 @@ const Create = () => {
         <div>
             <Navbar />
             <Grid
-                gridTemplateColumns="22vw auto 24vw"
+                gridTemplateColumns="22vw 80ch"
                 columnGap="2rem"
                 marginLeft="1rem"
                 marginRight="1rem">
                 <RightSidebar />
                 <CreateComponent />
-                <LeftSidebar />
             </Grid>
         </div>
     );

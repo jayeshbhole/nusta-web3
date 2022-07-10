@@ -36,6 +36,7 @@ const CreateComponent = () => {
         await saveFile("image", image, {
             metadata: { createdBy: account ?? "" },
             type: "image/jpeg",
+            saveIPFS: true,
         }).then(async (res) => {
             toast({
                 title: "Uploaded to IPFS. Creating Post",
@@ -43,13 +44,17 @@ const CreateComponent = () => {
                 duration: 9000,
                 isClosable: true,
             });
+            // @ts-ignore
+            console.log(res?.ipfs(), res);
 
             await save({
                 imageURL: res?._url,
                 caption: caption,
                 userAddress: account ?? "",
+                // @ts-ignore
+                ipfs: res?.ipfs(),
             })
-                .then(() => {
+                .then((res) => {
                     toast({
                         title: "Post created!",
                         status: "success",
