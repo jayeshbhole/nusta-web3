@@ -1,6 +1,28 @@
-type ExampleEntity @entity {
-  id: ID!
-  count: BigInt!
-  owner: Bytes! # address
-  spender: Bytes! # address
+# type ExampleEntity @entity {
+#     id: ID!
+#     count: BigInt!
+#     owner: Bytes! # address
+#     spender: Bytes! # address
+# }
+
+type Post @entity {
+    id: ID!
+    author: Author! # address
+    ipfsHash: String!
+    caption: String!
+    imageURL: String!
+}
+
+type Author @entity {
+    id: ID!
+    author: Bytes! # address
+    posts: [Post]
+}
+
+type Query {
+    posts: [Post]
+    post(id: ID!): Post
+
+    authors: [Author]
+    author(id: ID!): Author
 }

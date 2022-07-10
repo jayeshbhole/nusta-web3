@@ -6,8 +6,8 @@ contract Social {
     string[] public posts;
     mapping(uint => address) public postAuthor;
 
-    event NewPost(string ipfs, address user);
-    event DeletePost(string ipfs, address user);
+    event NewPost(string ipfs, address author);
+    event DeletePost(string ipfs, address author);
 
     // event NewComment(string comment, string postIpfs, address user);
     // event DeleteComment(string comment, string postIpfs);

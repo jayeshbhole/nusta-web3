@@ -1,26 +1,27 @@
 specVersion: 0.0.1
 schema:
-  file: ./schema.graphql
+    file: ./schema.graphql
+repository: https://github.com/jayeshbhole/nusta-web3/tree/subgraph-approach
 dataSources:
-  - kind: ethereum
-    name: Contract
-    network: mumbai
-    source:
-      address: "0xb859b8b565c9f14aa4881ec7b3861f2b42d0dd7a"
-      abi: Contract
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      entities:
-        - Approval
-        - Transfer
-      abis:
-        - name: Contract
-          file: ./abis/Contract.json
-      eventHandlers:
-        - event: Approval(indexed address,indexed address,uint256)
-          handler: handleApproval
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/contract.ts
+    - kind: ethereum
+      name: Social
+      network: mumbai
+      source:
+          address: "0xb859b8b565c9f14aa4881ec7b3861f2b42d0dd7a"
+          abi: Social
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.5
+          language: wasm/assemblyscript
+          entities:
+              - Post
+              - Author
+          abis:
+              - name: Social
+                file: ./abis/Social.json
+          eventHandlers:
+              - event: NewPost(indexed string, indexed address)
+                handler: handleNewPost
+              - event: DeletePost(indexed string, indexed address)
+                handler: handleDeletePost
+          file: ./src/social.ts
