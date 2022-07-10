@@ -4,10 +4,10 @@
     "scripts": {
         "codegen": "graph codegen",
         "build": "graph build",
-        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ jayeshbhole/Nusta Web3",
-        "create-local": "graph create --node http://localhost:8020/ jayeshbhole/Nusta Web3",
-        "remove-local": "graph remove --node http://localhost:8020/ jayeshbhole/Nusta Web3",
-        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 jayeshbhole/Nusta Web3"
+        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ jayeshbhole/nusta-web3",
+        "create-local": "graph create --node http://localhost:8020/ jayeshbhole/nusta-web3",
+        "remove-local": "graph remove --node http://localhost:8020/ jayeshbhole/nusta-web3",
+        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 jayeshbhole/nusta-web3"
     },
     "dependencies": {
         "@graphprotocol/graph-cli": "0.32.0",

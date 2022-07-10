@@ -11,6 +11,7 @@ dataSources:
       source:
           address: "0x887b1001872aB54EC7E65Dd6D2BC8926b97EC372"
           abi: Social
+          startBlock: 27114496
       mapping:
           kind: ethereum/events
           apiVersion: 0.0.5

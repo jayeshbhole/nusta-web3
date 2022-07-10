@@ -1,0 +1,30 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+features:
+  - ipfsOnEthereumContracts
+repository: https://github.com/jayeshbhole/nusta-web3/tree/subgraph-approach
+dataSources:
+  - kind: ethereum
+    name: Social
+    network: mumbai
+    source:
+      address: "0x887b1001872aB54EC7E65Dd6D2BC8926b97EC372"
+      abi: Social
+      startBlock: 27114496
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Post
+        - Author
+      abis:
+        - name: Social
+          file: Social/abis/Social.json
+      eventHandlers:
+        - event: NewPost(uint256,string,address)
+          handler: handleNewPost
+        - event: DeletePost(uint256,address)
+          handler: handleDeletePost
+      file: Social/Social.wasm

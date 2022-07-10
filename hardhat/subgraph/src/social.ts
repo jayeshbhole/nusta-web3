@@ -16,13 +16,15 @@ export function handleNewPost(event: NewPostEvent): void {
     }
 
     let post = new Post(postId);
-    let ipfs = event.params.ipfs;
+    let ipfs = event.params.ipfs || "";
     post.ipfsHash = ipfs;
     post.author = user.toHex();
 
     post.save();
 
-    author.posts.push(ipfs);
+    let posts = author.posts;
+    posts.push(postId);
+    author.posts = posts;
     author.save();
 }
 export function handleDeletePost(event: DeletePostEvent): void {

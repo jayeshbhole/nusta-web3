@@ -59,15 +59,6 @@ export class Post extends Entity {
   set ipfsHash(value: string) {
     this.set("ipfsHash", Value.fromString(value));
   }
-
-  get caption(): string {
-    let value = this.get("caption");
-    return value!.toString();
-  }
-
-  set caption(value: string) {
-    this.set("caption", Value.fromString(value));
-  }
 }
 
 export class Author extends Entity {
@@ -101,29 +92,12 @@ export class Author extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get address(): Bytes {
-    let value = this.get("address");
-    return value!.toBytes();
-  }
-
-  set address(value: Bytes) {
-    this.set("address", Value.fromBytes(value));
-  }
-
-  get posts(): Array<string> | null {
+  get posts(): Array<string> {
     let value = this.get("posts");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toStringArray();
-    }
+    return value!.toStringArray();
   }
 
-  set posts(value: Array<string> | null) {
-    if (!value) {
-      this.unset("posts");
-    } else {
-      this.set("posts", Value.fromStringArray(<Array<string>>value));
-    }
+  set posts(value: Array<string>) {
+    this.set("posts", Value.fromStringArray(value));
   }
 }
