@@ -43,7 +43,7 @@ const CreateComponent = () => {
                 duration: 9000,
                 isClosable: true,
             });
-            console.log(res);
+
             await save({
                 imageURL: res?._url,
                 caption: caption,
