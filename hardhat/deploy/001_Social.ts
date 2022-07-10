@@ -6,17 +6,10 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
 
-    const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-    const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-    const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
-
-    const lockedAmount = ethers.utils.parseEther("1");
-
-    await deploy("Lock", {
+    await deploy("Social", {
         from: deployer,
-        args: [unlockTime],
+        args: [],
         log: true,
-        value: lockedAmount,
     });
 };
 export default func;

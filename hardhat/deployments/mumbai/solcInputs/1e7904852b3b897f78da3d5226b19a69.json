@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Social.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.9;\n\n// The Social contract has event emissions for a social feed.\ncontract Social {\n    string[] public posts;\n    mapping(uint => address) public postAuthor;\n\n    event NewPost(uint id, string ipfs, address author);\n    event DeletePost(uint id, address author);\n\n    // event NewComment(string comment, string postIpfs, address user);\n    // event DeleteComment(string comment, string postIpfs);\n\n    function newPost(string memory _ipfs) public {\n        require(bytes(_ipfs).length != 0); // consult on max byte length\n\n        posts.push(_ipfs);\n        postAuthor[posts.length - 1] = msg.sender;\n\n        emit NewPost(posts.length - 1, _ipfs, msg.sender);\n    }\n\n    function deletePost(uint _id) public {\n        require(_id < posts.length);\n        require(msg.sender == postAuthor[_id], \"msg sender not author of post\");\n        postAuthor[_id] = address(0);\n        posts[_id] = \"\";\n\n        emit DeletePost(_id, msg.sender);\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
