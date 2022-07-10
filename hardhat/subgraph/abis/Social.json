@@ -4,14 +4,14 @@
         "inputs": [
             {
                 "indexed": false,
-                "internalType": "string",
-                "name": "ipfs",
-                "type": "string"
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
             },
             {
                 "indexed": false,
                 "internalType": "address",
-                "name": "user",
+                "name": "author",
                 "type": "address"
             }
         ],
@@ -23,6 +23,12 @@
         "inputs": [
             {
                 "indexed": false,
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
                 "internalType": "string",
                 "name": "ipfs",
                 "type": "string"
@@ -30,7 +36,7 @@
             {
                 "indexed": false,
                 "internalType": "address",
-                "name": "user",
+                "name": "author",
                 "type": "address"
             }
         ],

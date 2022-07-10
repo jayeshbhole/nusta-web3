@@ -6,8 +6,8 @@ contract Social {
     string[] public posts;
     mapping(uint => address) public postAuthor;
 
-    event NewPost(string ipfs, address author);
-    event DeletePost(string ipfs, address author);
+    event NewPost(uint id, string ipfs, address author);
+    event DeletePost(uint id, address author);
 
     // event NewComment(string comment, string postIpfs, address user);
     // event DeleteComment(string comment, string postIpfs);
@@ -18,7 +18,7 @@ contract Social {
         posts.push(_ipfs);
         postAuthor[posts.length - 1] = msg.sender;
 
-        emit NewPost(_ipfs, msg.sender);
+        emit NewPost(posts.length - 1, _ipfs, msg.sender);
     }
 
     function deletePost(uint _id) public {
@@ -27,6 +27,6 @@ contract Social {
         postAuthor[_id] = address(0);
         posts[_id] = "";
 
-        emit DeletePost(posts[_id], msg.sender);
+        emit DeletePost(_id, msg.sender);
     }
 }
