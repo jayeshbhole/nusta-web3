@@ -5,24 +5,19 @@
 #     spender: Bytes! # address
 # }
 
-type Post @entity {
+type Post
+    @entity
+    @key(fields: "id")
+    @key(fields: "author")
+    @key(fields: "ipfsHash") {
     id: ID!
     author: Author! # address
     ipfsHash: String!
     caption: String!
-    imageURL: String!
 }
 
 type Author @entity {
     id: ID!
-    author: Bytes! # address
-    posts: [Post]
-}
-
-type Query {
-    posts: [Post]
-    post(id: ID!): Post
-
-    authors: [Author]
-    author(id: ID!): Author
+    address: Bytes! # address
+    posts: [Post!] @derivedFrom(field: "author")
 }

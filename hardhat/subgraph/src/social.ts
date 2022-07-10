@@ -1,57 +1,49 @@
-import { BigInt } from "@graphprotocol/graph-ts"
-import { Contract, Approval, Transfer } from "../generated/Contract/Contract"
-import { ExampleEntity } from "../generated/schema"
+import { ipfs, store } from "@graphprotocol/graph-ts";
+import {
+    Social,
+    DeletePost as DeletePostEvent,
+    NewPost as NewPostEvent
+} from "../generated/Social/Social";
+import { Post, Author } from "../generated/schema";
 
-export function handleApproval(event: Approval): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
+export function handleNewPost(event: NewPostEvent): void {
+    let postId = event.params.id.toString();
+    let user = event.params.author;
+    let author = Author.load(user.toHex());
+    if (author == null) {
+        author = new Author(user.toHex());
+        author.posts = [];
+    }
 
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (!entity) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
+    let post = new Post(postId);
+    let ipfs = event.params.ipfs;
+    post.ipfsHash = ipfs;
+    post.author = user.toHex();
 
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
+    post.save();
 
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
-
-  // Entity fields can be set based on event parameters
-  entity.owner = event.params.owner
-  entity.spender = event.params.spender
-
-  // Entities can be written to the store with `.save()`
-  entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.allowance(...)
-  // - contract.approve(...)
-  // - contract.balanceOf(...)
-  // - contract.decimals(...)
-  // - contract.decreaseAllowance(...)
-  // - contract.increaseAllowance(...)
-  // - contract.name(...)
-  // - contract.symbol(...)
-  // - contract.totalSupply(...)
-  // - contract.transfer(...)
-  // - contract.transferFrom(...)
+    author.posts.push(ipfs);
+    author.save();
 }
+export function handleDeletePost(event: DeletePostEvent): void {
+    let postId = event.params.id.toString();
+    let post = Post.load(postId);
+    if (post == null) {
+        return;
+    }
 
-export function handleTransfer(event: Transfer): void {}
+    // delete entry of post from the graph
+    store.remove("Post", postId);
+
+    // delete post from the author's list of posts
+    let author = Author.load(post.author);
+    if (author == null) {
+        return;
+    }
+
+    let index = author.posts.indexOf(postId);
+    if (index > -1) {
+        author.posts.splice(index, 1);
+    }
+    author.save();
+}
